@@ -22,8 +22,8 @@ The ISA for the processor is defined as follows and can be found in the package.
 
 <table>
 <tr>
-  <th style="text-align:left">RRR Instructions</th>
-  <th style="text-align:left;padding-left:10px;">Description:</th>
+  <th>RRR Instructions</th>
+  <th>Description:</th>
 </tr>
 <tr><td><code>ADD Rd,Rs1,Rs2</code></td><td>Add Rs1 to Rs2</td></tr>
 <tr><td><code>SUB Rd,Rs1,Rs2</code></td><td>Subtract Rs2 from Rs1</td></tr>
@@ -32,20 +32,20 @@ The ISA for the processor is defined as follows and can be found in the package.
 <tr><td><code>SLT Rd,Rs1,Rs2</code></td><td>Output = 1 if Rs1 &lt; Rs2</td></tr>
 <tr><td><code>SLL Rd,Rs1,Rs2</code></td><td>Shift Left Logical Rs1 by Rs2 bits</td></tr>
 <tr><td><code>SRL Rd,Rs1,Rs2</code></td><td>Shift Right Logical Rs1 by Rs2 bits</td></tr>
-<tr><td><code>SRA Rd,Rs1,Rs2</code></td><td>Shift Right Arithmatic Rs1 by Rs2 bits</td></tr>
+<tr><td><code>SRA Rd,Rs1,Rs2</code></td><td>Shift Right Arithmetic Rs1 by Rs2 bits</td></tr>
 <tr><td><code>MUL Rd,Rs1,Rs2</code></td><td>Multiply Rs1 with Rs2</td></tr>
 </table>
   
 <table>  
 <tr>
-  <th style="text-align:left">RRI Instructions</th>
-  <th style="text-align:left;padding-left:10px;">Description:</th>
+  <th>RRI Instructions</th>
+  <th>Description:</th>
 </tr>
 <tr><td><code>ADDI Rd, Rs, Immediate</code></td><td>Add Rs to Immediate</td></tr>
 <tr><td><code>ANDI Rd, Rs, Immediate</code></td><td>Bitwise AND Rs with Immediate</td></tr>
 <tr><td><code>ORI&nbsp; Rd, Rs, Immediate</code></td><td>Bitwise OR Rs with Immediate</td></tr>
 <tr><td><code>SLTI Rd, Rs, Immediate</code></td><td>Output = 1 if Rs &lt; Immediate</td></tr>
-<tr><td><code>LUI&nbsp; Rd, Rs, Immediate</code></td><td>Load Immedaite on upper 8-bits of Rs</td></tr>
+<tr><td><code>LUI&nbsp; Rd, Rs, Immediate</code></td><td>Load Immediate on upper 8-bits of Rs</td></tr>
 <tr><td><code>J&nbsp;&nbsp;&nbsp; Rs</code></td><td>Jump to content of Rs</td></tr>
 <tr><td><code>BEQ&nbsp; Rs1,Rs2,Immediate</code></td><td>Jump to PC + Immediate if Rs1 == Rs2</td></tr>
 <tr><td><code>BNEQ Rs1,Rs2,Immediate</code></td><td>Jump to PC + Immediate if Rs1 != Rs2</td></tr>
@@ -54,3 +54,4 @@ The ISA for the processor is defined as follows and can be found in the package.
 </table>
 
 ## Memory Files
+The imemory.mif and the dmemory.mif are the files for the processors instruction memory and data memory respectively. They are used for programming the processor to perform its various operations.
