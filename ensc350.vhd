@@ -53,7 +53,7 @@ component alu
     immediate : in std_logic_vector((instr_size - 13) downto 0);
     imm_sel : in operand_select;
     alu_op : in alu_commands;
-	  condition : out std_logic;
+    condition : out std_logic;
     alu_out : out Std_logic_vector(data_size-1 downto 0));
 end component;  
 
@@ -79,10 +79,10 @@ end component;
 
 component pc_calc
   port( clk, resetn, condition : in std_logic;
-			pc_op : in pc_commands;								
-			Rs1 : in std_logic_vector(data_size-1 downto 0); 								
-			offset : in std_logic_vector(instr_size-13 downto 0); 
-			iaddr_out : out std_logic_vector(iaddr_size-1 downto 0) ); 
+	pc_op : in pc_commands;								
+	Rs1 : in std_logic_vector(data_size-1 downto 0); 								
+	offset : in std_logic_vector(instr_size-13 downto 0); 
+	iaddr_out : out std_logic_vector(iaddr_size-1 downto 0) ); 
 end component;
 
 
@@ -127,28 +127,28 @@ DECODE: instr_decode port map( idata_in => idata_in,
 	wb_sel => wb_sel );
 
 REG_FILE: rfile port map( clk => clk, 
-  resetn => resetn,
-	ra => ra,
-	a_out => a_out,
-	rb => rb,
-	b_out => b_out,
-	rd1 => rd,
-	d1_in  => d_in );
+  	resetn => resetn,
+  	ra => ra,
+  	a_out => a_out,
+  	rb => rb,
+  	b_out => b_out,
+  	rd1 => rd,
+  	d1_in  => d_in );
 	
 ALU_COMP: alu port map ( in1 => a_out,
-  in2 => b_out,
-  immediate => immediate,
-  imm_sel => imm_sel,
-  alu_op => alu_op,
-  condition => condition,
- 	alu_out => alu_out );
+  	in2 => b_out,
+  	immediate => immediate,
+  	imm_sel => imm_sel,
+  	alu_op => alu_op,
+  	condition => condition,
+  	alu_out => alu_out );
  	
 MUL_COMP: mul port map (in1 => a_out,
-   in2 => b_out,
-   mul_op => mul_op,
-   mul_out => mul_out);	
+   	in2 => b_out,
+   	mul_op => mul_op,
+   	mul_out => mul_out);	
     
-MEMORY: mem_control port map( RS => b_out,--not right have to fix when we do SW
+MEMORY: mem_control port map( RS => b_out,
 	RB => a_out,
 	RD_mem => mem_out,
 	offset => immediate,
@@ -160,7 +160,7 @@ MEMORY: mem_control port map( RS => b_out,--not right have to fix when we do SW
 	MR => dmem_read );
     
 PROGRAMCOUNTER: pc_calc port map( clk => clk, 
-  resetn => resetn,
+  	resetn => resetn,
 	condition => condition,
 	pc_op => pc_op,
 	Rs1 => a_out,
@@ -168,8 +168,8 @@ PROGRAMCOUNTER: pc_calc port map( clk => clk,
 	iaddr_out => iaddr_out );
     
 WB_MUX: d_in <= mem_out when (wb_sel = wb_mem) else
-               alu_out when (wb_sel = wb_alu) else 
-               mul_out when (wb_sel = wb_mul) else
-               (others => '0');
+                alu_out when (wb_sel = wb_alu) else 
+                mul_out when (wb_sel = wb_mul) else
+                (others => '0');
 
 end STRUCTURAL;
