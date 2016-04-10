@@ -16,9 +16,9 @@ end alu;
 
 architecture behavioral of alu is
   
-signal sum, diff : std_logic_vector(data_size-1 downto 0);
-signal cmp : std_logic_vector(data_size-1 downto 0);
-signal s1, s2 : std_logic_vector(data_size-1 downto 0);
+  signal sum, diff : std_logic_vector(data_size-1 downto 0);
+  signal cmp : std_logic_vector(data_size-1 downto 0);
+  signal s1, s2 : std_logic_vector(data_size-1 downto 0);
 
 begin
   
@@ -42,17 +42,12 @@ alu_mux : alu_out <= sum(data_size-1 downto 0) when alu_op=alu_add else
           std_logic_vector(shift_left(unsigned(s1), to_integer(unsigned(s2)) )) when alu_op=alu_sll else
           std_logic_vector(shift_right(unsigned(s1) , to_integer(unsigned(s2)) )) when alu_op=alu_srl else 
           std_logic_vector(shift_right(signed(s1) , to_integer(unsigned(s2)) ) )when alu_op=alu_sra else 
-			    s2(7 downto 0) & "00000000" when alu_op = alu_lui else
+          s2(7 downto 0) & "00000000" when alu_op = alu_lui else
           (others=>'0');
 
 end behavioral;
+
 -------------------------------------------------------------------
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-
-use work.ensc350_package.all;
-
 
 entity mul is
   port(in1 : in std_logic_vector(data_size-1 downto 0);
@@ -66,6 +61,7 @@ architecture behavioral of mul is
   signal mul_temp : std_logic_vector(data_size*2-1 downto 0);
   
 begin
+
   mul_temp <= std_logic_vector(signed(in1) * signed(in2)) when (mul_op = mul_mul) else (others=>'0');
   mul_out <= mul_temp(data_size-1 downto 0);
     
