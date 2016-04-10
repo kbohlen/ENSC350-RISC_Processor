@@ -2,15 +2,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity segment7_conv is
-port (  D : in std_logic_vector(3 downto 0);  -- HEX input
-        O : out std_logic_vector(6 downto 0)  -- 7 bit decoded output.
-     );
+  port( D : in std_logic_vector(3 downto 0);  -- HEX input
+        O : out std_logic_vector(6 downto 0) ); -- 7 bit decoded output.
+
 end segment7_conv;
 
 architecture Behavioral of segment7_conv is
 
 begin
-PROCESS (D)
+    PROCESS (D)
 		BEGIN
 			CASE D IS
 				WHEN "0000"=> O<="1000000";
@@ -32,6 +32,5 @@ PROCESS (D)
 				WHEN OTHERS=> O<="1111111";
 			END CASE;
 	END PROCESS;
- 
 
 end Behavioral;
