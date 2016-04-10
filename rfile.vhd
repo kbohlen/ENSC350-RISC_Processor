@@ -13,14 +13,14 @@ entity rfile is
     b_out : out std_logic_vector(data_size-1 downto 0);
     rd1 : in std_logic_vector(rf_addr_size-1 downto 0);
     d1_in : in std_logic_vector(data_size-1 downto 0) ); 
-end Rfile;
+end rfile;
 
 architecture behavioral of rfile is
 
--- Used for the Register file data structure
-type rf_bus_array is array (2**rf_addr_size-1 downto 0) of Std_logic_vector(data_size-1 downto 0);
-signal reg_in,reg_out : rf_bus_array;
-signal in1_buffer, in2_buffer : std_logic_vector(data_size-1 downto 0);
+  -- Used for the Register file data structure
+  type rf_bus_array is array (2**rf_addr_size-1 downto 0) of Std_logic_vector(data_size-1 downto 0);
+  signal reg_in,reg_out : rf_bus_array;
+  signal in1_buffer, in2_buffer : std_logic_vector(data_size-1 downto 0);
   
 begin
   
@@ -30,14 +30,14 @@ begin
   Registers:for i in 1 to (2**rf_addr_size-1) generate 
   process(clk,resetn)
   begin
-      if resetn='0' then
+    if resetn='0' then
         reg_out(i) <= (others=>'0');
-      else 
+    else 
         if clk'event and clk='1' then
-          reg_out(i) <= reg_in(i);
+            reg_out(i) <= reg_in(i);
         end if;
-      end if; 
-    end process;
+    end if; 
+  end process;
   end generate Registers;
 
   -- Reg_file Reads
@@ -47,13 +47,13 @@ begin
   -- Reg_file writes. 
   WRITE_D_MUX: for i in 1 to (2**rf_addr_size-1) generate
   process(rd1,d1_in,reg_out) 
-  begin 
-      if i = Conv_Integer(unsigned(rd1)) then
+  begin
+    if i = Conv_Integer(unsigned(rd1)) then
         reg_in(i) <= d1_in; 
-      else
+    else
         reg_in(i) <= reg_out(i);
-      end if;
+    end if;
   end process;
-end generate WRITE_D_MUX;
+  end generate WRITE_D_MUX;
 
 end behavioral;
