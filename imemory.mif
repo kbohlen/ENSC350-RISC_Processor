@@ -10,11 +10,10 @@
 ---------------------------------------------------------------------------------------------
 
 -- This code is supposed to compute a 4 taps integer TAP filter, with coefficients  [1,3,-1,2] on a set of inputs.
--- There are many possible solutions for this, since we have only 4 taps we could use registers only, which makes the solution 
--- more efficient, but it may be more flexible to use increasing memory accesses. 
--- There is no multiply-accumulation in the processor, so we will use separate multiply and add
--- In the current version, coefficients are mapped from address 0xA00 on, samples from Address 0xB00, Results are stored in address 0xf00 
--- 
+-- There are many possible solutions for this, since we have only 4 taps we could use registers only, which makes the solution
+-- more efficient, but it may be more flexible to use increasing memory accesses.
+-- There is no multiply-accumulation in the processor, so we will use separate multiply and add.
+-- In the current version, coefficients are mapped from address 0xA00 on, samples from Address 0xB00, results are stored in address 0xf00.
 
 DEPTH = 40;                   % The size of memory (number of words we are writing) %
 WIDTH = 20;                   % Number of bits per word  %
@@ -24,8 +23,8 @@ CONTENT                       % start of (address : data pairs) %
 BEGIN
 
 -- Initializing Memory pointers for Data and Coefficients
-0 : 8100a; % lui r1,0x0a      coeff pointer  %
-1 : 8200b; % lui r2,0x0b      sample pointer %
+0 : 8100a; % lui r1,0x0a      Coeff pointer  %
+1 : 8200b; % lui r2,0x0b      Sample pointer %
 2 : 8400f; % lui r4,0x0f      Result address %
 3 : 1a408; % addi r10,r4,0x8  Exit condition: Stop running the FIR after 8 results (8 is a random number, you can change this) %
 -- Initialize number of coefficients         
@@ -33,18 +32,18 @@ BEGIN
 4 : 13004; % addi r3,r0,4     Setting Tap counter            %
 5 : 19000; % addi r9,r0,r0    Resetting accumulator          %
 6 : e5100; % lw r5,r1,0       Tap Start: load tap coeff      %
-7 : e6200; % lw r6,r2,0       load tap sample                %
+7 : e6200; % lw r6,r2,0       Load tap sample                %
 8 : 0856f; % mul r8,r5,r6     Multiplication Coeff x Sample  %
 9 : 09981; % add r9,r9,r8     Accumulation                   %
-a : 11101; % addi r1,r1,1     move to next coeff             %
+a : 11101; % addi r1,r1,1     Move to next coeff             %
 b : 122ff; % addi r2,r2,-1    Move to next sample            %
-c : 133ff; % addi r3,r3,-1    decrease Tap Counter           %
+c : 133ff; % addi r3,r3,-1    Decrease Tap Counter           %
 d : d30f9; % bneq r3,r0,-7    If taps are not over Go back to compute next Tap	%	   
 e : f9400; % sw   r9,r4,0x0   If taps are over write out Result on Bus          %
 f : 19000; % addi r9,r0,0     Resetting accumulator                             %
 10: 111fc; % addi r1,r1,-4    Resetting coeff pointer                           %
-11: 12205; % addi r2,r2,5     Sliding sample window up one sample		        %
-12: 14401; % addi r4,r4,1     increasing the result pointer                     %
+11: 12205; % addi r2,r2,5     Sliding sample window up one sample               %
+12: 14401; % addi r4,r4,1     Increasing the result pointer                     %
 13: d4af1; % bneq r4,r10,-15  Going back up to process next sample              %   
 
 -- End of Program: this code will force the test-bench to write 1100 at ff00, which will stop computation  
