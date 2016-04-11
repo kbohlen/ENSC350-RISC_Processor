@@ -1,0 +1,22 @@
+-- Dmemory.mif
+-- Data file for ensc350 computation
+
+DEPTH = 10;                   % The size of data in bits %
+WIDTH = 16;                   % Number of bits per word  %
+ADDRESS_RADIX = HEX;          % The radix for address values %
+DATA_RADIX    = HEX;          % The radix for data values %
+CONTENT                       % start of (address : data pairs) %
+BEGIN
+
+-- FIR Coefficients
+a00 : 0001;
+a01 : 0003;
+a02 : ffff;
+a03 : 0002;
+-- FIR Input Data
+b00 : 0000; 
+b01 : 0001; 
+b02 : ffff;
+b03 : 0002;
+END
+
