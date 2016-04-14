@@ -55,3 +55,5 @@ The ISA for the processor is defined as follows and can be found in the package.
 
 ## Memory Files
 The imemory.mif and the dmemory.mif are the files for the processors instruction memory and data memory respectively. They are used for programming the processor to perform its various operations.
+
+The 2 program files perform the exact same FIR calculation as ENSC350-FIR_Filter. In this case it is implemented in software rather than hardware. It can be noted that the hardware is more efficient in it's FIR calculation whereas the processor is programmable and versatile, able to perform many other tasks.
